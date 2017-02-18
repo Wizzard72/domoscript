@@ -18,7 +18,7 @@
 	function DEBUG(fScript, fMessage, fDebug)
 		fMessage = fScript .. " - " .. fMessage
 		if (string.lower(fDebug) == "true" or fDebug == 1) then
-			print(fMessage)
+				print(fMessage)
 		end
 	end
 
@@ -42,215 +42,216 @@
 		return difference
 	end
 
-function DisableTime (fDiff, fHour, fMinute)
-	year = os.date("%Y")
-	month = os.date("%m")
-	if (tonumber(fHour) >= 1 and tonumber(fHour) < 5) then
-		day = tonumber(os.date("%d")) + 1
-	else
-		day = os.date("%d")
-	end
-	hour = fHour
-	minutes = fMinute
-	seconds = os.date("%S")
-	fTime = os.time()
-	fDisableTimer = os.time{year=year, month=month, day=day, hour=hour, min=minutes, sec=seconds}
-	if (fDiff == "True" ) then
-		fDifference = (os.difftime (fDisableTimer, fTime)) / 60
-		return fDifference
-	elseif (fDiff == "False") then
-		return fDisableTimer
-	end
-end
-
-function Time (fDiff, fHour, fMinute)
-	year = os.date("%Y") 	month = os.date("%m")
-	if (tonumber(fHour) >= 1 and tonumber(fHour) < 5) then
-		day = tonumber(os.date("%d")) + 1
-	else
-		day = os.date("%d")
-	end
-	hour = fHour
-	minutes = fMinute
-	seconds = os.date("%S")
-	fTime = os.time()
-	fDisableTimer = os.time{year=year, month=month, day=day, hour=hour, min=minutes, sec=seconds}
-	if (fDiff == "True" ) then
-		fDifference = (os.difftime (fDisableTimer, fTime)) / 60
-		return fDifference
-	elseif (fDiff == "False") then
-		return fDisableTimer
-	end
-end
-
-function split(pString, pPattern)
-	local Table = {}  -- NOTE: use {n = 0} in Lua-5.0
-	local fpat = "(.-)" .. pPattern
-	local last_end = 1
-	local s, e, cap = pString:find(fpat, 1)
-	while s do
-		if s ~= 1 or cap ~= "" then
-			table.insert(Table,cap)
-		end
-		last_end = e+1
-		s, e, cap = pString:find(fpat, last_end)
-	end
-	if last_end <= #pString then
-		cap = pString:sub(last_end)
-		table.insert(Table, cap)
-	end
-	return Table
-end
-
-function split2(s, delimiter)   
-	result = {};
-	for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-		table.insert(result, match);
-	end
-	return result;
-end
-
-function LightsOn(LightsOnDevice, LightsOnDim, LightsOnTime)
-	if (LightsOnTime ~= nil) then
-		if (LightsOnDim == "On") then
-			if (otherdevices[LightsOnDevice] == "Off") then
-				commandArray[LightsOnDevice] = 'On' .. ' FOR ' .. LightsOnTime
-			end
-		elseif (LightsOnDim == "Off") then
-			if (otherdevices[LightsOnDevice] == "On") then
-				commandArray[LightsOnDevice] = 'Off'
-			end
+	function DisableTime (fDiff, fHour, fMinute)
+		year = os.date("%Y")
+		month = os.date("%m")
+		if (tonumber(fHour) >= 1 and tonumber(fHour) < 5) then
+			day = tonumber(os.date("%d")) + 1
 		else
-			if (otherdevices_svalues[LightsOnDevice] ~= LightsOnDim) then
-				commandArray[LightsOnDevice] = 'Set Level ' .. LightsOnDim .. ' FOR ' .. LightsOnTime
-			end
+			day = os.date("%d")
 		end
-	else
-		if (LightsOnDim == "On") then
-			if (otherdevices[LightsOnDevice] == "Off") then
-				commandArray[LightsOnDevice] = 'On'
+		hour = fHour
+		minutes = fMinute
+		seconds = os.date("%S")
+		fTime = os.time()
+		fDisableTimer = os.time{year=year, month=month, day=day, hour=hour, min=minutes, sec=seconds}
+		if (fDiff == "True" ) then
+			fDifference = (os.difftime (fDisableTimer, fTime)) / 60
+			return fDifference
+		elseif (fDiff == "False") then
+			return fDisableTimer
+		end
+	end
+
+	function Time (fDiff, fHour, fMinute)
+		year = os.date("%Y")
+		month = os.date("%m")
+		if (tonumber(fHour) >= 1 and tonumber(fHour) < 5) then
+			day = tonumber(os.date("%d")) + 1
+		else
+			day = os.date("%d")
+		end
+		hour = fHour
+		minutes = fMinute
+		seconds = os.date("%S")
+		fTime = os.time()
+		fDisableTimer = os.time{year=year, month=month, day=day, hour=hour, min=minutes, sec=seconds}
+		if (fDiff == "True" ) then
+			fDifference = (os.difftime (fDisableTimer, fTime)) / 60
+			return fDifference
+		elseif (fDiff == "False") then
+			return fDisableTimer
+		end
+	end
+
+	function split(pString, pPattern)
+		local Table = {}  -- NOTE: use {n = 0} in Lua-5.0
+		local fpat = "(.-)" .. pPattern
+		local last_end = 1
+		local s, e, cap = pString:find(fpat, 1)
+		while s do
+			if s ~= 1 or cap ~= "" then
+				table.insert(Table,cap)
 			end
-		elseif (LightsOnDim == "Off") then
-			if (otherdevices[LightsOnDevice] == "On") then
-				commandArray[LightsOnDevice] = 'Off'
+			last_end = e+1
+			s, e, cap = pString:find(fpat, last_end)
+		end
+		if last_end <= #pString then
+			cap = pString:sub(last_end)
+			table.insert(Table, cap)
+		end
+		return Table
+	end
+
+	function split2(s, delimiter)   
+		result = {};
+		for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+			table.insert(result, match);
+		end
+		return result;
+	end
+
+	function LightsOn(LightsOnDevice, LightsOnDim, LightsOnTime)
+		if (LightsOnTime ~= nil) then
+			if (LightsOnDim == "On") then
+				if (otherdevices[LightsOnDevice] == "Off") then
+					commandArray[LightsOnDevice] = 'On' .. ' FOR ' .. LightsOnTime
 				end
+			elseif (LightsOnDim == "Off") then
+				if (otherdevices[LightsOnDevice] == "On") then
+					commandArray[LightsOnDevice] = 'Off'
+				end
+			else
+				if (otherdevices_svalues[LightsOnDevice] ~= LightsOnDim) then
+					commandArray[LightsOnDevice] = 'Set Level ' .. LightsOnDim .. ' FOR ' .. LightsOnTime
+				end
+			end
 		else
-			if (tonumber(otherdevices_svalues[LightsOnDevice]) ~= tonumber(LightsOnDim)) then
-				commandArray[LightsOnDevice] = 'Set Level ' .. LightsOnDim
+			if (LightsOnDim == "On") then
+				if (otherdevices[LightsOnDevice] == "Off") then
+					commandArray[LightsOnDevice] = 'On'
+				end
+			elseif (LightsOnDim == "Off") then
+				if (otherdevices[LightsOnDevice] == "On") then
+					commandArray[LightsOnDevice] = 'Off'
+				end
+			else
+				if (tonumber(otherdevices_svalues[LightsOnDevice]) ~= tonumber(LightsOnDim)) then
+					commandArray[LightsOnDevice] = 'Set Level ' .. LightsOnDim
+				end
 			end
 		end
 	end
-end
 
-function Count_Substring( s1, s2 )
-	local magic =  "[%^%$%(%)%%%.%[%]%*%+%-%?]"
-	local percent = function(s)return "%"..s end
-	return select( 2, s1:gsub( s2:gsub(magic,percent), "" ) )
-end
-
-function LightsAan(fDevice, fDim)
-	if (otherdevices_svalues[fDevice] == fDim or otherdevices_svalues[fDevice] == 255) then
-	elseif (tonumber(otherdevices_svalues[fDevice]) ~= tonumber(fDim)) then
-	    commandArray[fDevice] = 'Set Level ' .. fDim
+	function Count_Substring( s1, s2 )
+		local magic =  "[%^%$%(%)%%%.%[%]%*%+%-%?]"
+		local percent = function(s)return "%"..s end
+		return select( 2, s1:gsub( s2:gsub(magic,percent), "" ) )
 	end
-end
 
-function LightsOnLiving (fDim, fOffMin)
-	local fMaxDeviceCount = 10
-	fLivingLights = {}
-	for b = 1, fMaxDeviceCount, 1 do
-		if (uservariables["uvLivingLights" .. b] ~= nil) then
-			fLivingLights[b] = uservariables["uvLivingLights" .. b]
-			commandArray[fLivingLights[b]] = 'Set Level ' .. fDim
+	function LightsAan(fDevice, fDim)
+		if (otherdevices_svalues[fDevice] == fDim or otherdevices_svalues[fDevice] == 255) then
+		elseif (tonumber(otherdevices_svalues[fDevice]) ~= tonumber(fDim)) then
+	    		commandArray[fDevice] = 'Set Level ' .. fDim
 		end
 	end
-end
 
-function round(num, idp)
-	if (num == 0) then
-		return 0
-	else
-		local mult = 10^(idp or 0)
-		return math.floor(num * mult + 0.5) / mult
-	end
-end
-
-function updown(fDevice, fDimValue)
-	if (otherdevices_svalues[fDevice] < fDimValue) then
-		-- 5 < 15 = true
-		sValue = otherdevices_svalues[fDevice]
-		sDifference = math.ceil((fDimValue - sValue) / 5)
-		if (sDifference == 1) then
-			fDimValue = fDimValue - sValue
-		elseif (sDifference > 1) then
-			fDimValue = sValue + 5
-		end
-	elseif (otherdevices_svalues[fDevice] > fDimValue) then
-		-- 60 > 15 = true
-		sValue = otherdevices_svalues[sRecord[InstanceTotal]]
-		sDifference = math.ceil((sValue - fDimValue) / 5)
-		if (sDifference == 1) then
-			fDimValue = sValue - fDimValue
-		elseif (sDifference > 1) then
-			fDimValue = sValue -5
+	function LightsOnLiving (fDim, fOffMin)
+		local fMaxDeviceCount = 10
+		fLivingLights = {}
+		for b = 1, fMaxDeviceCount, 1 do
+			if (uservariables["uvLivingLights" .. b] ~= nil) then
+				fLivingLights[b] = uservariables["uvLivingLights" .. b]
+				commandArray[fLivingLights[b]] = 'Set Level ' .. fDim
+			end
 		end
 	end
-	return fDimValue
-end
 
-function DeviceOnOffDim(LightsOnDevice, LightsOnDim, LightsOnTime)
-        if (LightsOnTime ~= nil) then
-                if (LightsOnDim == "On") then
-                        if (otherdevices[LightsOnDevice] == "Off") then
-                                commandArray[LightsOnDevice] = 'On' .. ' FOR ' .. LightsOnTime
-                        end
-                elseif (LightsOnDim == "Off") then
-                        if (otherdevices[LightsOnDevice] == "On") then
-                                commandArray[LightsOnDevice] = 'Off'
-                        end
-		elseif (LightsOnDim == "All Off") then
-			if (otherdevices[LightsOnDevice] == "All On") then
-                                commandArray[LightsOnDevice] = 'All Off'
-                        end
-		elseif (LightsOnDim == "All On") then
-                        if (otherdevices[LightsOnDevice] == "All Off") then
-                                commandArray[LightsOnDevice] = 'All On' .. ' FOR ' .. LightsOnTime
-                        end
-                else
-                        if (otherdevices_svalues[LightsOnDevice] ~= LightsOnDim) then
-                                commandArray[LightsOnDevice] = 'Set Level ' .. LightsOnDim .. ' FOR ' .. LightsOnTime
-                        end
-                end
-        else
-                if (LightsOnDim == "On") then
-                        if (otherdevices[LightsOnDevice] == "Off") then
-                                commandArray[LightsOnDevice] = 'On'
-                        end
-                elseif (LightsOnDim == "Off") then
-                        if (otherdevices[LightsOnDevice] == "On") then
-                                commandArray[LightsOnDevice] = 'Off'
-                        end
-		elseif (LightsOnDim == "All Off") then
-			if (otherdevices[LightsOnDevice] == "All On") then
-                                commandArray[LightsOnDevice] = 'All Off'
-                        end
-		elseif (LightsOnDim == "All On") then
-                        if (otherdevices[LightsOnDevice] == "All Off") then
-                                commandArray[LightsOnDevice] = 'All On'
-                        end
-                else
-                        if (tonumber(otherdevices_svalues[LightsOnDevice]) ~= tonumber(LightsOnDim)) then
-                                commandArray[LightsOnDevice] = 'Set Level ' .. LightsOnDim
-                        end
-                end
-        end
-end
+	function round(num, idp)
+		if (num == 0) then
+			return 0
+		else
+			local mult = 10^(idp or 0)
+			return math.floor(num * mult + 0.5) / mult
+		end
+	end
 
-function NOTIFY(fPrio,fNotify, fDebug)
-        if (string.lower(fDebug) == "false" or fDebug == 0) then
-                commandArray['SendNotification'] = "Subject#" .. fNotify .. "#" .. fPrio
-        end
-end
+	function updown(fDevice, fDimValue)
+		if (otherdevices_svalues[fDevice] < fDimValue) then
+			-- 5 < 15 = true
+			sValue = otherdevices_svalues[fDevice]
+			sDifference = math.ceil((fDimValue - sValue) / 5)
+			if (sDifference == 1) then
+				fDimValue = fDimValue - sValue
+			elseif (sDifference > 1) then
+				fDimValue = sValue + 5
+			end
+		elseif (otherdevices_svalues[fDevice] > fDimValue) then
+			-- 60 > 15 = true
+			sValue = otherdevices_svalues[sRecord[InstanceTotal]]
+			sDifference = math.ceil((sValue - fDimValue) / 5)
+			if (sDifference == 1) then
+				fDimValue = sValue - fDimValue
+			elseif (sDifference > 1) then
+				fDimValue = sValue -5
+			end
+		end
+		return fDimValue
+	end
+
+	function DeviceOnOffDim(LightsOnDevice, LightsOnDim, LightsOnTime)
+	        if (LightsOnTime ~= nil) then
+	                if (LightsOnDim == "On") then
+        	                if (otherdevices[LightsOnDevice] == "Off") then
+                	                commandArray[LightsOnDevice] = 'On' .. ' FOR ' .. LightsOnTime
+                        	end
+                	elseif (LightsOnDim == "Off") then
+                        	if (otherdevices[LightsOnDevice] == "On") then
+                                	commandArray[LightsOnDevice] = 'Off'
+                        	end
+			elseif (LightsOnDim == "All Off") then
+				if (otherdevices[LightsOnDevice] == "All On") then
+	                                commandArray[LightsOnDevice] = 'All Off'
+        	                end
+			elseif (LightsOnDim == "All On") then
+                        	if (otherdevices[LightsOnDevice] == "All Off") then
+                                	commandArray[LightsOnDevice] = 'All On' .. ' FOR ' .. LightsOnTime
+                        	end
+                	else
+	                        if (otherdevices_svalues[LightsOnDevice] ~= LightsOnDim) then
+        	                        commandArray[LightsOnDevice] = 'Set Level ' .. LightsOnDim .. ' FOR ' .. LightsOnTime
+                	        end
+                	end
+        	else
+	                if (LightsOnDim == "On") then
+        	                if (otherdevices[LightsOnDevice] == "Off") then
+                	                commandArray[LightsOnDevice] = 'On'
+                        	end
+                	elseif (LightsOnDim == "Off") then
+                        	if (otherdevices[LightsOnDevice] == "On") then
+	                                commandArray[LightsOnDevice] = 'Off'
+        	                end
+			elseif (LightsOnDim == "All Off") then
+				if (otherdevices[LightsOnDevice] == "All On") then
+	                                commandArray[LightsOnDevice] = 'All Off'
+        	                end
+			elseif (LightsOnDim == "All On") then
+                        	if (otherdevices[LightsOnDevice] == "All Off") then
+	                                commandArray[LightsOnDevice] = 'All On'
+        	                end
+                	else
+                        	if (tonumber(otherdevices_svalues[LightsOnDevice]) ~= tonumber(LightsOnDim)) then
+	                                commandArray[LightsOnDevice] = 'Set Level ' .. LightsOnDim
+        	                end
+                	end
+        	end
+	end
+
+	function NOTIFY(fPrio,fNotify, fDebug)
+	        if (string.lower(fDebug) == "false" or fDebug == 0) then
+	                commandArray['SendNotification'] = "Subject#" .. fNotify .. "#" .. fPrio
+        	end
+	end
 
 	function VarMOD(fVarName, fVarValue, fVarDiffLastUpdate)
 		local fCurrentTime = os.time()
