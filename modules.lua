@@ -3,7 +3,7 @@
     /home/mydomo/domoticz/scripts/lua/modules.lua
 	
     -- Autors  ----------------------------------------------------------------
-    V1.0 - Paul Slats
+    V1.0 - Wizzard72
 			
     ]]--
  
