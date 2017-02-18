@@ -291,8 +291,7 @@
 		return year%4==0 and (year%100~=0 or year%400==0)
 	end
 
-	function IsItGonnaRain( minutesinfuture )
-        	lat='52.13'
+	function IsItGonnaRain( minutesinfuture )        	lat='52.13'
 	        lon='4.47'
         	debug=false
 	        tempfilename = '/var/tmp/rain.tmp' -- can be anywhere writeable
@@ -328,7 +327,6 @@
                 return(sRainfallIntensity)
 	end
 
-
 	function TEXTSW(fSWName, fSWValue, fSWDiffLastUpdate)
 		local fCurrentTime = os.time()
 		fSWLastUpdate = otherdevices_lastupdate[fSWName]
@@ -347,8 +345,6 @@
 		end
 	end
 
-
-
 	function LastUpdateDiff(fSWLUName)
 		local fLastUpdateTime = os.time()
 		fLastUpdate = otherdevices_lastupdate[fSWLUName]
@@ -362,6 +358,5 @@
 		fLastUpdateDiff = (os.difftime (fLastUpdateTime, fLastUpdate))
 		return fLastUpdateDiff
 	end
-
 
 	return mymodule
