@@ -3,7 +3,7 @@
     /home/domoticz/domoticz/scripts/lua/script_device_0watt_device_v1.0.lua
 	
     -- Autors  ----------------------------------------------------------------
-    V1.1 - Paul Slats
+    V1.1 - Wizzard
 	
 	
     -- Uservariables ----------------------------------------------------------
