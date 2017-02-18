@@ -13,35 +13,34 @@
     -- Below , edit at your own risk ------------------------------------------
 
 
+	local mymodule = {}
 
-local mymodule = {}
-
-function DEBUG(fScript, fMessage, fDebug)
-	fMessage = fScript .. " - " .. fMessage
-	if (string.lower(fDebug) == "true" or fDebug == 1) then
-		print(fMessage)
-	end 
-end 
-
-function Notification(fscriptname, fNotification, fOnOff)
-	if (fOnOff == "False") then
-		commandArray['SendNotification'] = "" .. fNotification .. ""
-	elseif (fOnOff == "True") then
+	function DEBUG(fScript, fMessage, fDebug)
+		fMessage = fScript .. " - " .. fMessage
+		if (string.lower(fDebug) == "true" or fDebug == 1) then
+			print(fMessage)
+		end
 	end
-end
 
-function timedifference (s)
-	year = string.sub(s, 1, 4)
-	month = string.sub(s, 6, 7)
-	day = string.sub(s, 9, 10)
-	hour = string.sub(s, 12, 13)
-	minutes = string.sub(s, 15, 16)
-	seconds = string.sub(s, 18, 19)
-	t1 = os.time()
-	t2 = os.time{year=year, month=month, day=day, hour=hour, min=minutes, sec=seconds}
-	difference = os.difftime (t1, t2)
-	return difference
-end
+	function Notification(fscriptname, fNotification, fOnOff)
+		if (fOnOff == "False") then
+			commandArray['SendNotification'] = "" .. fNotification .. ""
+		elseif (fOnOff == "True") then
+		end
+	end
+
+	function timedifference (s)
+		year = string.sub(s, 1, 4)
+		month = string.sub(s, 6, 7)
+		day = string.sub(s, 9, 10)
+		hour = string.sub(s, 12, 13)
+		minutes = string.sub(s, 15, 16)
+		seconds = string.sub(s, 18, 19)
+		t1 = os.time()
+		t2 = os.time{year=year, month=month, day=day, hour=hour, min=minutes, sec=seconds}
+		difference = os.difftime (t1, t2)
+		return difference
+	end
 
 function DisableTime (fDiff, fHour, fMinute)
 	year = os.date("%Y")
@@ -65,8 +64,7 @@ function DisableTime (fDiff, fHour, fMinute)
 end
 
 function Time (fDiff, fHour, fMinute)
-	year = os.date("%Y")
- 	month = os.date("%m")
+	year = os.date("%Y") 	month = os.date("%m")
 	if (tonumber(fHour) >= 1 and tonumber(fHour) < 5) then
 		day = tonumber(os.date("%d")) + 1
 	else
@@ -104,14 +102,13 @@ function split(pString, pPattern)
 	return Table
 end
 
-	function split2(s, delimiter)   
-		result = {};
-		for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-			table.insert(result, match);
-		end
-		return result;
+function split2(s, delimiter)   
+	result = {};
+	for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+		table.insert(result, match);
 	end
-
+	return result;
+end
 
 function LightsOn(LightsOnDevice, LightsOnDim, LightsOnTime)
 	if (LightsOnTime ~= nil) then
@@ -201,7 +198,7 @@ function updown(fDevice, fDimValue)
 	return fDimValue
 end
 
-	function DeviceOnOffDim(LightsOnDevice, LightsOnDim, LightsOnTime)
+function DeviceOnOffDim(LightsOnDevice, LightsOnDim, LightsOnTime)
         if (LightsOnTime ~= nil) then
                 if (LightsOnDim == "On") then
                         if (otherdevices[LightsOnDevice] == "Off") then
@@ -247,13 +244,13 @@ end
                         end
                 end
         end
-	end
+end
 
-	function NOTIFY(fPrio,fNotify, fDebug)
+function NOTIFY(fPrio,fNotify, fDebug)
         if (string.lower(fDebug) == "false" or fDebug == 0) then
                 commandArray['SendNotification'] = "Subject#" .. fNotify .. "#" .. fPrio
         end
-	end
+end
 
 	function VarMOD(fVarName, fVarValue, fVarDiffLastUpdate)
 		local fCurrentTime = os.time()
@@ -366,6 +363,4 @@ end
 	end
 
 
-
-
-return mymodule
+	return mymodule
