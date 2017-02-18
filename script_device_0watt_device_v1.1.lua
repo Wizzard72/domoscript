@@ -26,9 +26,12 @@
 	local CurrentTime = os.time()
 	local sScriptName = "0watt - device"
 	local s0wattTotal = uservariables["uv0wattTotal"]
+	local DomoticzPath = "/home/mydomo"
+	local ScriptPath = "/domoticz/scripts/lua"
+	local ModuleFileName = "/modules.lua"
 
     -- Below , edit at your own risk ------------------------------------------
-	package.path = package.path .. ";/home/mydomo/domoticz/scripts/lua/modules.lua"
+	package.path = package.path .. ";" .. DomoticzPath .. ScriptPath .. ModuleFileName
 	mymodule = require "mymodule"
 	commandArray = {}
 	if (devicechanged ~= nil) then
