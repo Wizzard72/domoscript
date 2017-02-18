@@ -1,22 +1,21 @@
-    --[[      Put a device off when it doesn't use energy
+--[[      Put a device off when it doesn't use energy
+
+	ScriptFileName = script_device_0watt_device_v1.0.lua
 	
-    /home/domoticz/domoticz/scripts/lua/script_device_0watt_device_v1.0.lua
+	-- Autors  ----------------------------------------------------------------
+	V1.1 - Wizzard
 	
-    -- Autors  ----------------------------------------------------------------
-    V1.1 - Wizzard
-	
-	
-    -- Uservariables ----------------------------------------------------------
-		uv0wattTotal                   = Integer
-		uv0wattDeviceInstances<number> = String
-		uv0wattDevice<number>          = String
+	-- Uservariables ----------------------------------------------------------
+	uv0wattTotal                   = Integer
+	uv0wattDeviceInstances<number> = String
+	uv0wattDevice<number>          = String
 		
 	-- Examples ----------------------------------------------------------
-		uv0wattTotal            = 2
-		uv0wattDeviceInstances1 = 1,8
-		uv0wattDevice1          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No,Watt1,Watt2,Watt3,Watt4,Watt5
-		uv0wattDeviceInstances2 = 2,6
-		uv0wattDevice2          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No,Watt1,Watt2,Watt3
+	uv0wattTotal            = 2
+	uv0wattDeviceInstances1 = 1,8
+	uv0wattDevice1          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No,Watt1,Watt2,Watt3,Watt4,Watt5
+	uv0wattDeviceInstances2 = 2,6
+	uv0wattDevice2          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No,Watt1,Watt2,Watt3
 		
     ]]--
  
