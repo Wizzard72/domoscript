@@ -1,6 +1,7 @@
 --[[      Set the WakeUpLight
-	
-/home/domoticz/domoticz/scripts/lua/script_device_alarm_v1.0.lua
+
+ScriptFileName = script_time_wakeuplight_v1.0.lua
+Type = Time
 	
 -- Autors  ----------------------------------------------------------------
 V1.0 - Wizzard72
@@ -8,9 +9,9 @@ V1.0 - Wizzard72
 	
 -- Uservariables --------------------------------------------------------
 -- Switches --------------------------------------------------------
-	ComingHome              = On/Off switch (Disable alarm when phone is near the house)
-	NotHome                 = On/Off switch (Enable alarm when phone is not near the house)
-	Security panel          = Security panel
+ComingHome              = On/Off switch (Disable alarm when phone is near the house)
+NotHome                 = On/Off switch (Enable alarm when phone is not near the house)
+Security panel          = Security panel
 
 -- Examples ----------------------------------------------------------
 
