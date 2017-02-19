@@ -1,6 +1,7 @@
 --[[      Put a device off when it doesn't use energy
 
 	ScriptFileName = script_device_0watt_device_v1.0.lua
+	Type = Device
 	
 	-- Autors  ----------------------------------------------------------------
 	V1.1 - Wizzard
