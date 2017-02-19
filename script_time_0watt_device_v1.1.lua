@@ -49,13 +49,10 @@
 		s0wattNofity = sRecord[6]
 		for deviceName,deviceValue in pairs(otherdevices) do
 			if (deviceName == s0wattDeviceWatt and otherdevices[s0wattDevice] == "On") then
-				print("Verschil" .. LastUpdateDiff(s0wattDevice))
 				if (LastUpdateDiff(s0wattDevice) >= sStandbyTime) then
-					--DEBUG(sScriptName,"Device " .. deviceName .. " is using " .. deviceValue .. " Watt.",sDEBUG)
 					s0wattDeviceStandbyTime = LastUpdateDiff(s0wattDevice)
 					s0wattDeviceWattStandbyTime = LastUpdateDiff(s0wattDeviceWatt)
 					s0wattDeviceLuaStandbyTime = LastUpdateDiff(s0WattDeviceLua)
-                                        --DEBUG(sScriptName,"s0wattDeviceLuaStandbyTime = " .. s0wattDeviceLuaStandbyTime,sDEBUG)
 					s0wattDevicelua = tostring(s0wattDevice .. " (lua)")
 					if (otherdevices[s0wattDevicelua] == "Hello World") then
 						DEBUG(sScriptName,"Reset the Text Device to Start",sDEBUG)
