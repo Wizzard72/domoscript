@@ -3,7 +3,7 @@
     /home/domoticz/domoticz/scripts/lua/script_time_livingroom_v1.0.lua
 	
     -- Autors  ----------------------------------------------------------------
-    V1.0 - Paul Slats
+    V1.0 - Wizzard72
 	
 	
     -- Uservariables ----------------------------------------------------------
