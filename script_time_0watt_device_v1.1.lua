@@ -14,9 +14,9 @@
 	-- Examples ----------------------------------------------------------
 		uv0wattTotal            = 2
 		uv0wattDeviceInstances1 = 1,8
-		uv0wattDevice1          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No,Watt1,Watt2,Watt3,Watt4,Watt5
+		uv0wattDevice1          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No
 		uv0wattDeviceInstances2 = 2,6
-		uv0wattDevice2          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No,Watt1,Watt2,Watt3
+		uv0wattDevice2          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No
 		
     ]]--
  
@@ -48,7 +48,8 @@
 		s0wattMaxWatt = tonumber(sRecord[5])
 		s0wattNofity = sRecord[6]
 		for deviceName,deviceValue in pairs(otherdevices) do
-			if (deviceName == s0wattDeviceWatt and otherdevices[s0wattDevice] == "On") then
+			if (deviceName == s0wattDeviceWatt and (otherdevices[s0wattDevice] == "On" or string.sub(otherdevices[s0wattDevice], 1, 9) == "Set Level")) then
+				DEBUG(sScriptName,"Device " .. deviceName .. " is using " .. deviceValue .. " Watt.",sDEBUG)
 				if (LastUpdateDiff(s0wattDevice) >= sStandbyTime) then
 					s0wattDeviceStandbyTime = LastUpdateDiff(s0wattDevice)
 					s0wattDeviceWattStandbyTime = LastUpdateDiff(s0wattDeviceWatt)
@@ -65,7 +66,7 @@
 									TEXTSW(sRecord[3], s0wattMaxWatt .. ' Watt (1)', 60)
 								end
 							end
-					elseif (string.sub(otherdevices[s0wattDevicelua], 1, 6) == s0wattMaxWatt .. " Watt") then
+					elseif (string.sub(otherdevices[s0wattDevicelua], 1, 5 + string.len(s0wattMaxWatt)) == s0wattMaxWatt .. " Watt") then
 						if (tonumber(deviceValue) <= tonumber(s0wattMaxWatt)) then
 							if (otherdevices_svalues[s0wattDevicelua] == s0wattMaxWatt .. " Watt (" .. s0wattRounds .. ")") then
 								DEBUG(sScriptName,"The last is reached (" .. s0wattMaxWatt .. " Watt (" .. s0wattRounds .. ")).",sDEBUG)
@@ -73,7 +74,7 @@
 								TEXTSW(sRecord[3], 'Stop', 60)
 							else
 								if  (s0wattDeviceLuaStandbyTime >= 60)  then
-									count = tonumber(string.sub(otherdevices_svalues[s0wattDevicelua], 9, 9))
+									count = tonumber(string.sub(otherdevices_svalues[s0wattDevicelua], 8 + string.len(s0wattMaxWatt), 8 + string.len(s0wattMaxWatt)))
 									count = count + 1
 									DEBUG(sScriptName,"Amount of " .. s0wattMaxWatt .. " Watt count = " .. count,sDEBUG)
 									DEBUG(sScriptName,"The switch " .. s0WattDeviceLua .. " is in fase " .. s0wattMaxWatt .. " Watt (" .. count .. ") (Step = " .. count .. "/" .. s0wattRounds .. ").",sDEBUG)
@@ -85,7 +86,13 @@
 							TEXTSW(sRecord[3], 'Start', 60)
 						end
 					elseif (otherdevices[s0wattDevicelua] == "Stop") then
-						DeviceOnOffDim(s0wattDevice,"Off")
+						if (otherdevices[s0wattDevice] == "On") then
+							DEBUG(sScriptName,"The " .. s0wattDevice .. " switch don't use any power the last " .. s0wattRounds .. " minutes, turning the switch off.",sDEBUG)
+							DeviceOnOffDim(s0wattDevice,"Off")
+						elseif (string.sub(otherdevices[s0wattDevice], 1, 9) == "Set Level") then
+							DEBUG(sScriptName,"The " .. s0wattDevice .. " dimmer don't use any power the last " .. s0wattRounds .. " minutes, turning the dimmer off",sDEBUG)
+							DeviceOnOffDim(s0wattDevice,0)
+						end
 						TEXTSW(sRecord[3], 'Start', 0)
 						break
 					end
@@ -93,6 +100,9 @@
 				else
 	                                DEBUG(sScriptName,"Script starts after " .. LastUpdateDiff(s0wattDevice) .. "/" .. sStandbyTime .. " seconds after activating the switch",sDEBUG)
 				end
+			elseif (otherdevices[s0wattDevice] == "Off" and string.sub(otherdevices[s0WattDeviceLua], 1, 5 + string.len(s0wattMaxWatt)) == s0wattMaxWatt .. " Watt") then
+				DEBUG(sScriptName,"The " .. s0wattDevice .. " is off and the " .. s0WattDeviceLua .. " has the wrong state. Reparing this...",sDEBUG)
+ 				TEXTSW(sRecord[3], 'Start', 60)
 			end
 		end
 	end
