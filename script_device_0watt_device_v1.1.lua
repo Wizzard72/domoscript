@@ -13,9 +13,9 @@
 	-- Examples ----------------------------------------------------------
 	uv0wattTotal            = 2
 	uv0wattDeviceInstances1 = 1,8
-	uv0wattDevice1          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No,Watt1,Watt2,Watt3,Watt4,Watt5
+	uv0wattDevice1          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No
 	uv0wattDeviceInstances2 = 2,6
-	uv0wattDevice2          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No,Watt1,Watt2,Watt3
+	uv0wattDevice2          = Device,Power Meter Device,Standby Time,MaxWatt,Notify Yes/No
 		
     ]]--
  
@@ -46,15 +46,7 @@
 			sStandbyTime = tonumber(sRecord[4])
 			s0wattMaxWatt = tonumber(sRecord[5])
 			s0wattNofity = sRecord[6]
---			s0wattDeviceLastUpdate = otherdevices_lastupdate[s0wattDevice]
---			local year = string.sub(s0wattDeviceLastUpdate, 1, 4)
---			local month = string.sub(s0wattDeviceLastUpdate, 6, 7)
---			local day = string.sub(s0wattDeviceLastUpdate, 9, 10)
---			local hour = string.sub(s0wattDeviceLastUpdate, 12, 13)
---			local minutes = string.sub(s0wattDeviceLastUpdate, 15, 16)
---			local seconds = string.sub(s0wattDeviceLastUpdate, 18, 19)
---			s0wattDeviceLastUpdate = os.time{year=year, month=month, day=day, hour=hour, min=minutes, sec=seconds}
---			s0wattDeviceStandbyTime = (os.difftime (CurrentTime, s0wattDeviceLastUpdate))
+
 			for deviceName,deviceValue in pairs(devicechanged) do
 				if (deviceName == s0wattDevice) then
 					if (deviceValue == "On") then
