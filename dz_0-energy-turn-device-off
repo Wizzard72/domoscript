@@ -38,11 +38,11 @@ local USAGE_Notify = {
 
 return {
 	logging = {
-		--level = domoticz.LOG_INFO, -- Uncomment to override the dzVents global logging setting
+		--level = domoticz.LOG_INFO, 					-- Uncomment to override the dzVents global logging setting
 		marker = '0-energy'
 	},
 	on = {
-		devices = {
+		devices = {							-- Make sure that the devices are the same as above
 			'Wasmachine (W)',
 			'Wasmachine',
 			'Slaapkamer Paul Schakelaar',
@@ -51,7 +51,7 @@ return {
 			'Espressomachine (W)'
 		},
 	},
-	data = { -- use exact device names to match USAGE_DEVICES
+	data = { 								-- use exact device names to match USAGE_DEVICES
 		['Wasmachine (W)'] = { history = true, maxMinutes = 6 },
 		['Slaapkamer Paul Schakelaar (W)'] = { history = true, maxMinutes = 10 },
 		['Espressomachine (W)'] = { history = true, maxMinutes = 10 }
