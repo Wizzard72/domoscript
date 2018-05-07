@@ -1,0 +1,86 @@
+-- create a lookup table that matches a usage
+-- device to the accompanying switch
+local USAGE_DEVICES = {
+	['Wasmachine (W)'] = 'Wasmachine',
+	['Slaapkamer Paul Schakelaar (W)'] = 'Slaapkamer Paul Schakelaar',
+	['Espressomachine (W)'] = 'Espressomachine'
+}
+
+local USAGE_SwitchTimeOutMinutes = {
+	['Wasmachine'] = 6,
+	['Slaapkamer Paul Schakelaar'] = 10,
+	['Espressomachine'] = 30
+}
+
+local USAGE_MaxWatt = {
+	['Wasmachine'] = 0,
+	['Slaapkamer Paul Schakelaar'] = 1,
+	['Espressomachine'] = 1
+}
+
+local USAGE_Notify = {
+	['Wasmachine'] = 'Yes',
+	['Slaapkamer Paul Schakelaar'] = 'No',
+	['Espressomachine'] = 'No'
+}
+
+return {
+	logging = {
+		--level = domoticz.LOG_INFO, -- Uncomment to override the dzVents global logging setting
+		marker = 'TEST '
+	},
+	on = {
+		devices = {
+			'Wasmachine (W)',
+			'Wasmachine',
+			'Slaapkamer Paul Schakelaar',
+			'Slaapkamer Paul Schakelaar (W)',
+			'Espressomachine',
+			'Espressomachine (W)'
+		},
+	},
+	data = { -- use exact device names to match USAGE_DEVICES
+		['Wasmachine (W)'] = { history = true, maxMinutes = 6 },
+		['Slaapkamer Paul Schakelaar (W)'] = { history = true, maxMinutes = 10 },
+		['Espressomachine (W)'] = { history = true, maxMinutes = 10 }
+	},
+
+	execute = function(domoticz, device)
+		
+		if (USAGE_DEVICES[device.name] ~= nil) then
+			-- we have a usage sensor here
+			local switch = domoticz.devices(USAGE_DEVICES[device.name])
+			local history = domoticz.data[device.name]
+			local timeout = USAGE_SwitchTimeOutMinutes[USAGE_DEVICES[device.name]]
+			local watt = USAGE_MaxWatt[USAGE_DEVICES[device.name]]
+			domoticz.log("timeout = " .. timeout)
+			domoticz.log("watt = " .. watt)
+			history.add(device.WhActual)
+
+			if (switch.active and history.avg() <= watt and switch.lastUpdate.minutesAgo >= timeout) then
+			 	switch.switchOff().checkFirst()
+			end
+			
+		else
+			-- device is a switch
+			local notify = USAGE_Notify[device.name]
+			domoticz.log("notify = " .. notify)
+			if (device.active and notify == "Yes") then
+				domoticz.notify(
+					"ACTIVATE", 
+					device.name .. " activated#I let you know when device " .. device.name .. " is turned off", 
+					domoticz.PRIORITY_EMERGENCY, 
+					domoticz.SOUND_SIREN
+				)
+			elseif (notify == "Yes") then
+				domoticz.notify(
+					"DEACTIVATED", 
+					device.name .. " is deactivated",
+					domoticz.PRIORITY_EMERGENCY, 
+					domoticz.SOUND_SIREN
+				)
+			end
+		end
+
+	end
+}
