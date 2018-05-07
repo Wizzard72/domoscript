@@ -1,33 +1,45 @@
+--[[	This script switches off a device after it has consumed no or almost no power for a certain period of time.
+
+	Prerequisits
+	==================================
+	Domoticz v3.8837 or later (dzVents version 2.3 or later)
+
+	CHANGE LOG: See 
+
+-- Authors  ----------------------------------------------------------------
+	V1.0 - Wizzard72 with help from dannybloe
+]]--
+
 -- create a lookup table that matches a usage
 -- device to the accompanying switch
 local USAGE_DEVICES = {
-	['Wasmachine (W)'] = 'Wasmachine',
-	['Slaapkamer Paul Schakelaar (W)'] = 'Slaapkamer Paul Schakelaar',
-	['Espressomachine (W)'] = 'Espressomachine'
+	['Wasmachine (W)'] = 'Wasmachine',					-- You need to have a inline wall plug that measures energy,
+	['Slaapkamer Paul Schakelaar (W)'] = 'Slaapkamer Paul Schakelaar',	-- here you make the link between the energy device and the wall plug.
+	['Espressomachine (W)'] = 'Espressomachine'				-- Adjust to your needs. Between every line you need to add a ",".
 }
 
 local USAGE_SwitchTimeOutMinutes = {
-	['Wasmachine'] = 6,
-	['Slaapkamer Paul Schakelaar'] = 10,
-	['Espressomachine'] = 30
+	['Wasmachine'] = 6,							-- Here you define how long no power is used per device.
+	['Slaapkamer Paul Schakelaar'] = 10,					-- The period is in minutes.
+	['Espressomachine'] = 30						-- Adjust to your needs. Between every line you need to add a ",".
 }
 
 local USAGE_MaxWatt = {
-	['Wasmachine'] = 0,
-	['Slaapkamer Paul Schakelaar'] = 1,
-	['Espressomachine'] = 1
+	['Wasmachine'] = 0,							-- Here you define the maximum amount of power a device uses when it is in standby.
+	['Slaapkamer Paul Schakelaar'] = 1,					-- Some devices uses a little amount of power. Test it and put here the slightly higher power usage.
+	['Espressomachine'] = 1							-- Adjust to your needs. Between every line you need to add a ",".
 }
 
 local USAGE_Notify = {
-	['Wasmachine'] = 'Yes',
-	['Slaapkamer Paul Schakelaar'] = 'No',
+	['Wasmachine'] = 'Yes',							-- In some cases you want to be notified when a device is turned on and off.
+	['Slaapkamer Paul Schakelaar'] = 'No',					-- Adjust to your needs. Between every line you need to add a ",".
 	['Espressomachine'] = 'No'
 }
 
 return {
 	logging = {
 		--level = domoticz.LOG_INFO, -- Uncomment to override the dzVents global logging setting
-		marker = 'TEST '
+		marker = '0-energy'
 	},
 	on = {
 		devices = {
